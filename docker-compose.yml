@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  ahead-scatter:
+    container_name: ahead-scatter-container
+    image: ahead-scatter-img
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
