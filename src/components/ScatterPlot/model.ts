@@ -5,6 +5,8 @@ export interface DataPoint {
 export interface Polygon {
   id: number;
   points: { x: number; y: number }[];
+  visible: boolean;
+  color: string;
 }
 
 export interface ScatterPlotProps {
@@ -15,6 +17,7 @@ export interface ScatterPlotProps {
 }
 
 export interface PolygonControlsProps {
+  handleToggleVisibility: (id: number) => void;
   setIsPolygonMode: React.Dispatch<React.SetStateAction<boolean>>;
   setPolygonPoints: React.Dispatch<
     React.SetStateAction<
@@ -25,4 +28,5 @@ export interface PolygonControlsProps {
     >
   >;
   isPolygonMode: boolean;
+  polygons: Polygon[];
 }

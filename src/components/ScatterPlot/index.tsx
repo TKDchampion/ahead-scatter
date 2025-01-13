@@ -104,24 +104,28 @@ const ScatterPlot: React.FC<ScatterPlotProps> = ({
     const dynamicGroup = svg.append("g").attr("class", "dynamic-group");
 
     polygons.forEach((polygon) => {
-      dynamicGroup
-        .append("polygon")
-        .attr("points", polygon.points.map((p) => `${p.x},${p.y}`).join(" "))
-        .attr("fill", "none")
-        .attr("stroke-width", 2)
-        .attr("opacity", 0.6);
-
-      const [p1, p2] = polygon.points.slice(0, 2);
-      if (p1 && p2) {
-        const midX = (p1.x + p2.x) / 2;
-        const midY = (p1.y + p2.y) / 2;
-
+      if (polygon.visible) {
         dynamicGroup
-          .append("text")
-          .attr("x", midX)
-          .attr("y", midY - 5)
-          .attr("text-anchor", "middle")
-          .style("font-size", "14px");
+          .append("polygon")
+          .attr("points", polygon.points.map((p) => `${p.x},${p.y}`).join(" "))
+          .attr("fill", "none")
+          .attr("stroke", polygon.color)
+          .attr("stroke-width", 2)
+          .attr("opacity", 0.6);
+
+        const [p1, p2] = polygon.points.slice(0, 2);
+        if (p1 && p2) {
+          const midX = (p1.x + p2.x) / 2;
+          const midY = (p1.y + p2.y) / 2;
+
+          dynamicGroup
+            .append("text")
+            .attr("x", midX)
+            .attr("y", midY - 5)
+            .attr("text-anchor", "middle")
+            .style("font-size", "14px")
+            .style("fill", polygon.color);
+        }
       }
     });
 
@@ -150,6 +154,14 @@ const ScatterPlot: React.FC<ScatterPlotProps> = ({
         .attr("r", 4)
         .attr("fill", "red");
     }
+  };
+
+  const handleToggleVisibility = (id: number) => {
+    const newPolygons = polygons.map((polygon) =>
+      polygon.id === id ? { ...polygon, visible: !polygon.visible } : polygon
+    );
+    setPolygons(newPolygons);
+    updatePolygons(newPolygons);
   };
 
   useEffect(() => {
@@ -202,6 +214,11 @@ const ScatterPlot: React.FC<ScatterPlotProps> = ({
       const newPolygon = {
         id: Date.now(),
         points: polygonPoints,
+        visible: true,
+        color: getNextColor(),
+        text: `Polygon ${polygons.length + 1}`,
+        counts: 0,
+        percentage: 0,
       };
       setPolygons([...polygons, newPolygon]);
       setPolygonPoints([]);
@@ -218,9 +235,11 @@ const ScatterPlot: React.FC<ScatterPlotProps> = ({
         onMouseDown={handleMouseDown}
       />
       <PolygonControls
+        handleToggleVisibility={handleToggleVisibility}
         setIsPolygonMode={setIsPolygonMode}
         setPolygonPoints={setPolygonPoints}
         isPolygonMode={isPolygonMode}
+        polygons={polygons}
       />
     </div>
   );
