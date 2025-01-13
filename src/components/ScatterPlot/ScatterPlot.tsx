@@ -9,7 +9,7 @@ import {
   updatePolygonsDraw,
 } from "@/utils/scatterPlotUtils/polygonDraw";
 import ScatterPlotCanvas from "./ScatterPlotCanvas";
-import { useMouseEvents } from "@/hooks/scatterPlotHook/useMouseEvents";
+import { useMouseEvents } from "@/hooks/scatterPlotHook/useMouseMoveEvents";
 
 const ScatterPlot: React.FC = () => {
   const {

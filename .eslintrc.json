@@ -24,7 +24,8 @@
     "quotes": ["error", "double"],
     "object-curly-spacing": ["error", "always"],
     "@typescript-eslint/no-explicit-any": "off",
-    "@typescript-eslint/ban-types": "off"
+    "@typescript-eslint/ban-types": "off",
+    "@typescript-eslint/no-unsafe-function-type": "off"
   },
   "ignorePatterns": ["out/**/*", ".next/**/*"]
 }
