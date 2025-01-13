@@ -32,4 +32,9 @@ export interface PolygonControlsProps {
   >;
   isPolygonMode: boolean;
   polygons: Polygon[];
+  handleColorChange: (id: number, color: string) => void;
+  throttledHandleUpdateText: (id: number, text: string) => void;
+  lineStyle: string;
+  setLineStyle: React.Dispatch<React.SetStateAction<string>>;
+  colors: string[];
 }

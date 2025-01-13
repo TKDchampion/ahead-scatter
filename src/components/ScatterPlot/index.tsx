@@ -23,6 +23,7 @@ const ScatterPlot: React.FC<ScatterPlotProps> = ({
     { x: number; y: number }[]
   >([]);
   const [polygons, setPolygons] = useState<Polygon[]>([]);
+  const [lineStyle, setLineStyle] = useState("solid");
   const tempMousePosition = useRef<{ x: number; y: number } | null>(null);
   const width = 800;
   const height = 900;
@@ -146,7 +147,7 @@ const ScatterPlot: React.FC<ScatterPlotProps> = ({
         )
         .attr("fill", "none")
         .attr("stroke", "blue")
-        .attr("stroke-dasharray", "4 2")
+        .attr("stroke-dasharray", lineStyle === "dashed" ? "4 4" : "none")
         .attr("stroke-width", 1);
 
       dynamicGroup
@@ -211,6 +212,25 @@ const ScatterPlot: React.FC<ScatterPlotProps> = ({
     setPolygons(newPolygons);
     updatePolygons(newPolygons);
   };
+
+  const handleColorChange = (id: number, color: string) => {
+    const newPolygons = polygons.map((polygon) =>
+      polygon.id === id ? { ...polygon, color } : polygon
+    );
+    setPolygons(newPolygons);
+    updatePolygons(newPolygons);
+  };
+
+  const throttledHandleUpdateText = useCallback(
+    throttle((id: number, text: string) => {
+      const newPolygons = polygons.map((polygon) =>
+        polygon.id === id ? { ...polygon, text } : polygon
+      );
+      setPolygons(newPolygons);
+      updatePolygons(newPolygons);
+    }, 200),
+    [polygons]
+  );
 
   useEffect(() => {
     const svg = d3
@@ -289,6 +309,11 @@ const ScatterPlot: React.FC<ScatterPlotProps> = ({
         setPolygonPoints={setPolygonPoints}
         isPolygonMode={isPolygonMode}
         polygons={polygons}
+        handleColorChange={handleColorChange}
+        throttledHandleUpdateText={throttledHandleUpdateText}
+        lineStyle={lineStyle}
+        setLineStyle={setLineStyle}
+        colors={colors}
       />
     </div>
   );
