@@ -21,20 +21,6 @@ export interface ScatterPlotProps {
 
 export interface PolygonControlsProps {
   handleToggleVisibility: (id: number) => void;
-  setIsPolygonMode: React.Dispatch<React.SetStateAction<boolean>>;
-  setPolygonPoints: React.Dispatch<
-    React.SetStateAction<
-      {
-        x: number;
-        y: number;
-      }[]
-    >
-  >;
-  isPolygonMode: boolean;
-  polygons: Polygon[];
   handleColorChange: (id: number, color: string) => void;
   throttledHandleUpdateText: (id: number, text: string) => void;
-  lineStyle: string;
-  setLineStyle: React.Dispatch<React.SetStateAction<string>>;
-  colors: string[];
 }

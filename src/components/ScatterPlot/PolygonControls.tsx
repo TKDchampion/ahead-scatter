@@ -1,20 +1,24 @@
 "use client";
 import React from "react";
-import throttle from "lodash/throttle";
 import { PolygonControlsProps } from "./model";
+import throttle from "lodash/throttle";
+import { useScatterPlotContext } from "@/contexts/ScatterPlotContext";
 
 const PolygonControls: React.FC<PolygonControlsProps> = ({
   handleToggleVisibility,
   handleColorChange,
   throttledHandleUpdateText,
-  setIsPolygonMode,
-  setPolygonPoints,
-  isPolygonMode,
-  lineStyle,
-  setLineStyle,
-  polygons,
-  colors,
 }) => {
+  const {
+    isPolygonMode,
+    setIsPolygonMode,
+    setPolygonPoints,
+    polygons,
+    lineStyle,
+    setLineStyle,
+    colors,
+  } = useScatterPlotContext();
+
   const throttledOnChange = throttle(
     (id: number, text: string) => {
       throttledHandleUpdateText(id, text);
@@ -28,7 +32,7 @@ const PolygonControls: React.FC<PolygonControlsProps> = ({
       <div className="flex items-center mb-4">
         <button
           onClick={() => {
-            setIsPolygonMode((preIsPolygon) => !preIsPolygon);
+            setIsPolygonMode();
             setPolygonPoints([]);
           }}
           className="bg-blue-500 text-white px-4 py-2 rounded mr-4"
