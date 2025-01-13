@@ -124,7 +124,12 @@ const ScatterPlot: React.FC<ScatterPlotProps> = ({
             .attr("y", midY - 5)
             .attr("text-anchor", "middle")
             .style("font-size", "14px")
-            .style("fill", polygon.color);
+            .style("fill", polygon.color)
+            .text(
+              `${polygon.text} (${
+                polygon.counts
+              } points, ${polygon.percentage.toFixed(2)}%)`
+            );
         }
       }
     });
@@ -156,6 +161,49 @@ const ScatterPlot: React.FC<ScatterPlotProps> = ({
     }
   };
 
+  const isPointInPolygon = (
+    point: { x: number; y: number },
+    polygon: { x: number; y: number }[]
+  ) => {
+    let isInside = false;
+    for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
+      const xi = polygon[i].x,
+        yi = polygon[i].y;
+      const xj = polygon[j].x,
+        yj = polygon[j].y;
+
+      const intersect =
+        yi > point.y !== yj > point.y &&
+        point.x < ((xj - xi) * (point.y - yi)) / (yj - yi) + xi;
+
+      if (intersect) isInside = !isInside;
+    }
+    return isInside;
+  };
+
+  const calculatePointsInPolygons = () => {
+    const xScale = d3
+      .scaleLinear()
+      .domain([200, 1000])
+      .range([margin.left, width - margin.right]);
+
+    const yScale = d3
+      .scaleLinear()
+      .domain([0, 1000])
+      .range([height - margin.bottom, margin.top]);
+
+    return polygons.map((polygon) => {
+      const count = filteredData.filter((d) => {
+        const point = { x: xScale(d[xAxes]), y: yScale(d[yAxes]) };
+        return isPointInPolygon(point, polygon.points);
+      }).length;
+
+      const percentage = (count / filteredData.length) * 100;
+
+      return { ...polygon, counts: count, percentage };
+    });
+  };
+
   const handleToggleVisibility = (id: number) => {
     const newPolygons = polygons.map((polygon) =>
       polygon.id === id ? { ...polygon, visible: !polygon.visible } : polygon
@@ -174,7 +222,8 @@ const ScatterPlot: React.FC<ScatterPlotProps> = ({
   }, [filteredData, xAxes, yAxes, title]);
 
   useEffect(() => {
-    setPolygons(polygons.map((polygon) => polygon));
+    const updatedPolygons = calculatePointsInPolygons();
+    setPolygons(updatedPolygons);
     updatePolygons(polygons);
   }, [polygonPoints]);
 

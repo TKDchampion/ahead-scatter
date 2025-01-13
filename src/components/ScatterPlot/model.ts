@@ -7,6 +7,9 @@ export interface Polygon {
   points: { x: number; y: number }[];
   visible: boolean;
   color: string;
+  text: string;
+  counts: number;
+  percentage: number;
 }
 
 export interface ScatterPlotProps {
