@@ -1,11 +1,15 @@
 # Scatter Plot Visualization Project
 
+## Instructions:
+
+<img src="https://ahead-scatter.vercel.app/result.png" alt="Example Image" style="width:50%;">
+
+- Click the Arbitrary Polygon button to start selecting multiple areas in the scatter plot and click again to close the draw mode.
+- Once the selection is complete, a corresponding set of action buttons will appear below. These buttons allow you to perform operations such as hiding, labeling, changing the border color, and adjusting the border style. Additionally, the data volume and percentage will be calculated simultaneously.
+
 ## Demo Link & Expected Result Image
 
 Demo Link: [Scatter Plot Demo](https://ahead-scatter.vercel.app)
-
-Expected Result:
-<img src="https://ahead-scatter.vercel.app/result.png" alt="Example Image" style="width:50%;">
 
 ## Project Structure
 
@@ -68,3 +72,11 @@ Expected Result:
   ```bash
   docker compose up
   ```
+
+## Component
+
+1. Import **`ScatterPlot`** component
+2. Set Properties
+   - **`xAxes`**: Specifies the label for the X-axis data (e.g., "CD45-KrO").
+   - **`yAxes`**: Specifies the label for the Y-axis data (e.g., "SS INT LIN").
+   - **`title`**: Sets the title for the scatter plot.

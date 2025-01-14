@@ -31,7 +31,7 @@ const PolygonControls: React.FC<PolygonControlsProps> = ({
           }}
           className="bg-blue-500 text-white px-4 py-2 rounded mr-4"
         >
-          {isPolygonMode ? "Exit Polygon Mode" : "Draw Polygon"}
+          {isPolygonMode ? "Exit Polygon Mode" : "Arbitrary Polygon"}
         </button>
         <Selecter
           value={drawLineStyle}
