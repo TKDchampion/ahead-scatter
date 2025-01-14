@@ -12,8 +12,7 @@ export interface Polygon {
   percentage: number;
 }
 
-export interface ScatterPlotProps {
-  data: DataPoint[];
+export interface ScatterPlotWrapperProps {
   xAxes: string;
   yAxes: string;
   title: string;
@@ -22,5 +21,5 @@ export interface ScatterPlotProps {
 export interface PolygonControlsProps {
   handleToggleVisibility: (id: number) => void;
   handleColorChange: (id: number, color: string) => void;
-  throttledHandleUpdateText: (id: number, text: string) => void;
+  handleUpdateText: (id: number, text: string) => void;
 }

@@ -3,11 +3,12 @@ import React from "react";
 import { PolygonControlsProps } from "./model";
 import throttle from "lodash/throttle";
 import { useScatterPlotContext } from "@/contexts/ScatterPlotContext";
+import { debounce } from "lodash";
 
 const PolygonControls: React.FC<PolygonControlsProps> = ({
   handleToggleVisibility,
   handleColorChange,
-  throttledHandleUpdateText,
+  handleUpdateText,
 }) => {
   const {
     isPolygonMode,
@@ -19,13 +20,9 @@ const PolygonControls: React.FC<PolygonControlsProps> = ({
     colors,
   } = useScatterPlotContext();
 
-  const throttledOnChange = throttle(
-    (id: number, text: string) => {
-      throttledHandleUpdateText(id, text);
-    },
-    200,
-    { trailing: true, leading: false }
-  );
+  const debounceOnChange = debounce((id: number, text: string) => {
+    handleUpdateText(id, text);
+  }, 50);
 
   return (
     <div className="pl-8">
@@ -64,7 +61,7 @@ const PolygonControls: React.FC<PolygonControlsProps> = ({
             <input
               type="text"
               defaultValue={polygon.text}
-              onChange={(e) => throttledOnChange(polygon.id, e.target.value)}
+              onChange={(e) => debounceOnChange(polygon.id, e.target.value)}
               className="px-2 py-1 border rounded mr-2"
               placeholder="Edit text"
             />

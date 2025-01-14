@@ -1,6 +1,5 @@
 "use client";
 import React, { useCallback } from "react";
-import throttle from "lodash/throttle";
 import PolygonControls from "./PolygonControls";
 import { useScatterPlotContext } from "@/contexts/ScatterPlotContext";
 import {
@@ -11,7 +10,7 @@ import {
 import ScatterPlotCanvas from "./ScatterPlotCanvas";
 import { useMouseEvents } from "@/hooks/scatterPlotHook/useMouseMoveEvents";
 
-const ScatterPlot: React.FC = () => {
+const ScatterPlotWrapper: React.FC = () => {
   const {
     svgRef,
     isPolygonMode,
@@ -51,12 +50,12 @@ const ScatterPlot: React.FC = () => {
     );
   };
 
-  const throttledHandleUpdateText = useCallback(
-    throttle((id: number, text: string) => {
+  const handleUpdateText = useCallback(
+    (id: number, text: string) => {
       updatePolygons((polygon) =>
         polygon.id === id ? { ...polygon, text } : polygon
       );
-    }, 50),
+    },
     [updatePolygons]
   );
 
@@ -104,10 +103,10 @@ const ScatterPlot: React.FC = () => {
       <PolygonControls
         handleToggleVisibility={handleToggleVisibility}
         handleColorChange={handleColorChange}
-        throttledHandleUpdateText={throttledHandleUpdateText}
+        handleUpdateText={handleUpdateText}
       />
     </div>
   );
 };
 
-export default ScatterPlot;
+export default ScatterPlotWrapper;
