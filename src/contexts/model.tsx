@@ -14,8 +14,8 @@ export interface ScatterPlotContextProps {
   setPolygonPoints: (points: { x: number; y: number }[]) => void;
   polygons: Polygon[];
   setPolygons: (polygons: Polygon[]) => void;
-  lineStyle: string;
-  setLineStyle: (style: string) => void;
+  drawLineStyle: string;
+  setDrawLineStyle: (style: string) => void;
   colorIndex: number;
   getNextColor: () => string;
 }
@@ -24,7 +24,7 @@ export type State = {
   isPolygonMode: boolean;
   polygonPoints: { x: number; y: number }[];
   polygons: Polygon[];
-  lineStyle: string;
+  drawLineStyle: string;
   colorIndex: number;
 };
 
@@ -33,6 +33,6 @@ export type Action =
   | { type: "SET_POLYGON_POINTS"; payload: { x: number; y: number }[] }
   | { type: "SET_POLYGONS"; payload: Polygon[] }
   | { type: "ADD_POLYGON"; payload: Polygon }
-  | { type: "SET_LINE_STYLE"; payload: string }
+  | { type: "SET_DRAW_LINE_STYLE"; payload: string }
   | { type: "SET_COLOR_INDEX"; payload: number }
   | { type: "NEXT_COLOR" };

@@ -19,8 +19,8 @@ const useScatterPlotActions = (
         dispatch({ type: "SET_POLYGON_POINTS", payload: points }),
       setPolygons: (polygons: Polygon[]) =>
         dispatch({ type: "SET_POLYGONS", payload: polygons }),
-      setLineStyle: (style: string) =>
-        dispatch({ type: "SET_LINE_STYLE", payload: style }),
+      setDrawLineStyle: (style: string) =>
+        dispatch({ type: "SET_DRAW_LINE_STYLE", payload: style }),
       getNextColor,
     }),
     [dispatch, getNextColor]

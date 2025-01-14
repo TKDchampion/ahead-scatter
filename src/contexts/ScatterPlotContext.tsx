@@ -10,7 +10,7 @@ const initialState: State = {
   isPolygonMode: false,
   polygonPoints: [],
   polygons: [],
-  lineStyle: "solid",
+  drawLineStyle: "solid",
   colorIndex: 0,
 };
 
@@ -36,8 +36,8 @@ const reducer = (state: State, action: Action): State => {
       return { ...state, polygonPoints: action.payload };
     case "SET_POLYGONS":
       return { ...state, polygons: action.payload };
-    case "SET_LINE_STYLE":
-      return { ...state, lineStyle: action.payload };
+    case "SET_DRAW_LINE_STYLE":
+      return { ...state, drawLineStyle: action.payload };
     case "NEXT_COLOR":
       return { ...state, colorIndex: (state.colorIndex + 1) % colors.length };
     default:

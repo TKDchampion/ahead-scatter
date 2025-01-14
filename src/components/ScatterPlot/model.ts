@@ -10,6 +10,7 @@ export interface Polygon {
   text: string;
   counts: number;
   percentage: number;
+  lineStyle: string;
 }
 
 export interface ScatterPlotWrapperProps {
@@ -21,5 +22,6 @@ export interface ScatterPlotWrapperProps {
 export interface PolygonControlsProps {
   handleToggleVisibility: (id: number) => void;
   handleColorChange: (id: number, color: string) => void;
+  handleLineStyleChange: (id: number, lineStyle: string) => void;
   handleUpdateText: (id: number, text: string) => void;
 }

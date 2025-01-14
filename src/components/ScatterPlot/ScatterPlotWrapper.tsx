@@ -18,7 +18,7 @@ const ScatterPlotWrapper: React.FC = () => {
     setPolygonPoints,
     polygons,
     setPolygons,
-    lineStyle,
+    drawLineStyle,
     tempMousePosition,
     getNextColor,
   } = useScatterPlotContext();
@@ -32,10 +32,10 @@ const ScatterPlotWrapper: React.FC = () => {
         newPolygons,
         polygonPoints,
         tempMousePosition,
-        lineStyle
+        drawLineStyle
       );
     },
-    [polygons, svgRef, polygonPoints, tempMousePosition, lineStyle]
+    [polygons, svgRef, polygonPoints, tempMousePosition, drawLineStyle]
   );
 
   const handleToggleVisibility = (id: number) => {
@@ -47,6 +47,12 @@ const ScatterPlotWrapper: React.FC = () => {
   const handleColorChange = (id: number, color: string) => {
     updatePolygons((polygon) =>
       polygon.id === id ? { ...polygon, color } : polygon
+    );
+  };
+
+  const handleLineStyleChange = (id: number, lineStyle: string) => {
+    updatePolygons((polygon) =>
+      polygon.id === id ? { ...polygon, lineStyle } : polygon
     );
   };
 
@@ -65,7 +71,7 @@ const ScatterPlotWrapper: React.FC = () => {
     polygons,
     polygonPoints,
     tempMousePosition,
-    lineStyle,
+    drawLineStyle,
     updatePolygonsDraw
   );
 
@@ -87,7 +93,8 @@ const ScatterPlotWrapper: React.FC = () => {
       newPoint,
       polygonPoints,
       polygons,
-      getNextColor
+      getNextColor,
+      drawLineStyle
     );
 
     setPolygons(newPolygons);
@@ -104,6 +111,7 @@ const ScatterPlotWrapper: React.FC = () => {
         handleToggleVisibility={handleToggleVisibility}
         handleColorChange={handleColorChange}
         handleUpdateText={handleUpdateText}
+        handleLineStyleChange={handleLineStyleChange}
       />
     </div>
   );

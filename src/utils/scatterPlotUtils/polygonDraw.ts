@@ -57,7 +57,7 @@ export const updatePolygonsDraw = (
   polygons: Polygon[],
   polygonPoints: { x: number; y: number }[],
   tempMousePosition: React.RefObject<{ x: number; y: number } | null>,
-  lineStyle: string
+  drawLineStyle: string
 ) => {
   const svg = d3.select(svgRef.current);
   svg.select(".dynamic-group").remove();
@@ -71,6 +71,10 @@ export const updatePolygonsDraw = (
         .attr("points", polygon.points.map((p) => `${p.x},${p.y}`).join(" "))
         .attr("fill", "none")
         .attr("stroke", polygon.color)
+        .attr(
+          "stroke-dasharray",
+          polygon.lineStyle === "dashed" ? "4 4" : "none"
+        )
         .attr("stroke-width", 2)
         .attr("opacity", 0.6);
 
@@ -107,7 +111,7 @@ export const updatePolygonsDraw = (
       )
       .attr("fill", "none")
       .attr("stroke", "blue")
-      .attr("stroke-dasharray", lineStyle === "dashed" ? "4 4" : "none")
+      .attr("stroke-dasharray", drawLineStyle === "dashed" ? "4 4" : "none")
       .attr("stroke-width", 1);
 
     dynamicGroup
@@ -127,7 +131,8 @@ export const addPolygonOrPoint = (
   newPoint: any,
   polygonPoints: any[],
   polygons: any[],
-  getNextColor: Function
+  getNextColor: Function,
+  drawLineStyle: string
 ) => {
   if (isClosingPolygon) {
     return {
@@ -141,6 +146,7 @@ export const addPolygonOrPoint = (
           text: `Polygon ${polygons.length + 1}`,
           counts: 0,
           percentage: 0,
+          lineStyle: drawLineStyle,
         },
       ],
       newPolygonPoints: [],

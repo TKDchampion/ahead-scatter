@@ -59,7 +59,7 @@ const useScatterPlotEffects = (
       updatedPolygons,
       state.polygonPoints,
       tempMousePosition,
-      state.lineStyle
+      state.drawLineStyle
     );
   }, [state.polygonPoints]);
 };
